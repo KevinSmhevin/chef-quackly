@@ -1,24 +1,26 @@
+import { useState } from "react"
+
 export default function Main() {
-    const ingredients = ["Chicken", "Rice", "Broccoli"]
+    const [ingredients, setIngredients] = useState([])
 
     const ingredienListItems = ingredients.map((ingredient, index) => (
         <li key={index}>{ingredient}</li>
     ))
 
-    function handleSubmit(event) {
-        event.preventDefault()
-        console.log("Form submitted!");
-
-        const formData = new FormData(event.currentTarget);
+    function addIngredient(formData) {
         const newIngredient = formData.get('ingredient').trim();
-        console.log(newIngredient);
-        ingredients.push(newIngredient);
-        console.log(ingredients);
+        setIngredients(prevIngredients => [...prevIngredients, newIngredient]);
+    }
+
+    const [recipeShown, setRecipeShown] = useState(false);
+
+    function toggleRecipe() {
+        setRecipeShown(prev => !prev);
     }
 
     return (
         <main>
-            <form className="add-ingredient-form" onSubmit={handleSubmit}>
+            <form className="add-ingredient-form" action={addIngredient}>
                 <input 
                     aria-label="Add ingredient"
                     type="text" 
@@ -27,9 +29,31 @@ export default function Main() {
                     />
                     <button type="submit">Add ingredient</button>
             </form>
-            <ul>
-                {ingredienListItems}
-            </ul>
+            {ingredients.length > 0 && 
+            <section>
+                <h2>Ingredients on hand:</h2>
+                <ul className="ingredients-list" aria-live="polite">
+                    {ingredienListItems}
+                </ul>
+                {
+                    ingredients.length > 3 && 
+                    <div className="get-recipe-container">
+                        <div>
+                            <h3>Ready for a recipe?</h3>
+                            <p>Generate a recipe from your list of ingredients.</p>
+                        </div>
+                        <button onClick={toggleRecipe}>Get a recipe</button>
+                    </div>
+                }
+            </section>
+    }
+            {recipeShown && 
+                <section>
+                    <h2>Your Recipe:</h2>
+                    <p>Delicious recipe goes here...</p>
+                </section>
+            }
+        
         </main>
     )
 }
