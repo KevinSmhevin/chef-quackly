@@ -12,9 +12,14 @@ export default function Main() {
     const [recipe, setRecipe] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
+
     function addIngredient(formData) {
         const newIngredient = formData.get('ingredient').trim();
         setIngredients(prevIngredients => [...prevIngredients, newIngredient]);
+    }
+
+    function removeIngredient(index) {
+        setIngredients(prevIngredients => prevIngredients.filter((_, i) => i !== index));
     }
 
     async function getRecipe() {
@@ -33,7 +38,7 @@ export default function Main() {
                 <input 
                     aria-label="Add ingredient"
                     type="text" 
-                    placeholder="Enter your recipe here..." 
+                    placeholder="Add ingredients here" 
                     name="ingredient"
                 />
                 <button type="submit">Add ingredient</button>
@@ -42,6 +47,7 @@ export default function Main() {
                 <IngredientsList 
                     ingredients={ingredients}
                     getRecipe={getRecipe}
+                    onRemoveIngredient={removeIngredient}
                 />
             }
             {isLoading && (
