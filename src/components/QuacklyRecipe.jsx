@@ -1,8 +1,10 @@
-export default function QuacklyRecipe() {
+import ReactMarkdown from 'react-markdown';
+
+export default function QuacklyRecipe(props) {
     return (
-        <section>
-            <h2>Your Recipe:</h2>
-            <p>Delicious recipe goes here...</p>
+        <section className="suggested-recipe-container" aria-live="polite">
+            <h2>Chef Quackly suggests:</h2>
+            <ReactMarkdown>{props.recipe}</ReactMarkdown>
         </section>
     )
 }

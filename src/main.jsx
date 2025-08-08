@@ -1,20 +1,30 @@
 import { useState } from "react"
 
+
 import QuacklyRecipe from "./components/QuacklyRecipe";
 import IngredientsList from "./components/IngredientsList";
+import Spinner from "./components/Spinner";
+
+import { getRecipeFromChefClaude } from "./ai"
 
 export default function Main() {
     const [ingredients, setIngredients] = useState([])
+    const [recipe, setRecipe] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     function addIngredient(formData) {
         const newIngredient = formData.get('ingredient').trim();
         setIngredients(prevIngredients => [...prevIngredients, newIngredient]);
     }
 
-    const [recipeShown, setRecipeShown] = useState(false);
-
-    function toggleRecipe() {
-        setRecipeShown(prev => !prev);
+    async function getRecipe() {
+        setIsLoading(true);
+        try {
+            const recipeMarkdown = await getRecipeFromChefClaude(ingredients);
+            setRecipe(recipeMarkdown);
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     return (
@@ -25,14 +35,22 @@ export default function Main() {
                     type="text" 
                     placeholder="Enter your recipe here..." 
                     name="ingredient"
-                    />
-                    <button type="submit">Add ingredient</button>
+                />
+                <button type="submit">Add ingredient</button>
             </form>
-            {ingredients.length > 0 && <IngredientsList 
-                ingredients={ingredients}
-                toggleRecipe={toggleRecipe}
-            />}
-            {recipeShown && <QuacklyRecipe />}
+            {ingredients.length > 0 && 
+                <IngredientsList 
+                    ingredients={ingredients}
+                    getRecipe={getRecipe}
+                />
+            }
+            {isLoading && (
+                <div className="loading-screen">
+                    <Spinner />
+                    <span className="loading-text">Loading recipe...</span>
+                </div>
+            )}
+            {!isLoading && recipe && <QuacklyRecipe recipe={recipe} />}
         </main>
     )
 }

@@ -3,8 +3,10 @@ import Main  from './Main'
 export default function App() {
   return (
     <>
-      <Header />
-      <Main />
+      <div className="app-container">
+        <Header />
+        <Main />
+      </div>
     </>
 
   )
