@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-import QuacklyRecipe from "./src/components/QuacklyRecipe";
-import IngredientsList from "./src/components/IngredientsList";
-import Spinner from "./src/components/Spinner";
+import QuacklyRecipe from "./components/QuacklyRecipe";
+import IngredientsList from "./components/IngredientsList";
+import Spinner from "./components/Spinner";
 
 import { getRecipeFromChefClaude } from "./ai"
 
