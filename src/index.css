@@ -1,87 +1,11 @@
-/* Mobile-friendly enhancements */
-@media (max-width: 600px) {
-  .add-ingredient-form {
-    flex-direction: column !important;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .add-ingredient-form > input {
-    font-size: 1.3rem;
-    padding: 22px 24px;
-    border-width: 2px;
-  }
-  .add-ingredient-form > button {
-    font-size: 1.25rem;
-    padding: 22px 0;
-    min-height: 56px;
-    border-width: 2px;
-  }
-  .ingredient-item {
-    width: 100%;
-    height: 64px;
-    margin-bottom: 16px;
-  }
-  .ingredient-btn {
-    font-size: 1.15rem;
-    padding: 16px 18px;
-    min-height: 56px;
-    border-width: 2px;
-  }
-  .ingredient-text {
-    font-size: 1.15rem;
-  }
-}
-
-.quackly-recipe-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 18px;
-}
-
-.quackly-recipe-icon {
-    width: 48px;
-    height: 48px;
-    object-fit: contain;
-    display: block;
-}
-.remove-ingredient-btn {
-    background: #D17557;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 10px;
-    margin-left: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-}
-.remove-ingredient-btn:hover {
-    background: #b95e3e;
-}
-.app-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
 * {
     box-sizing: border-box;
-}
-.ingredients-list {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
 body {
     margin: 0;
     font-family: Inter, sans-serif;
     background-color: #FAFAF8;
-}
-
-button {
-    cursor: pointer;
 }
 
 header {
@@ -104,6 +28,51 @@ header > h1 {
 
 main {
     padding: 30px 0px 30px;
+}
+
+.app-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.quackly-recipe-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.quackly-recipe-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    display: block;
+}
+
+.remove-ingredient-btn {
+    background: #D17557;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-left: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.remove-ingredient-btn:hover {
+    background: #b95e3e;
+}
+
+.ingredients-list {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+button {
+    cursor: pointer;
 }
 
 .ingredients-list-container {
@@ -263,6 +232,13 @@ main {
     line-height: 24px;
     font-size: 0.95rem;
     font-weight: 400;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px 0px rgba(0, 0, 0, 0.06);
+    padding: 32px 24px;
+    margin: 32px auto;
+    max-width: 800px;
+    width: 100%;
 }
 
 .suggested-recipe-container ul li, .suggested-recipe-container ol li {
@@ -319,33 +295,6 @@ main {
   }
 }
 
-@media (max-width: 600px) {
-  .ingredients-list {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 8px;
-  }
-  .add-ingredient-form {
-    flex-direction: column;
-    gap: 8px;
-    height: auto;
-  }
-  .add-ingredient-form > button {
-    width: 100%;
-  }
-  .add-ingredient-form > input {
-    max-width: 100%;
-  }
-  header {
-    height: auto;
-    flex-direction: column;
-    gap: 6px;
-    padding: 12px 0;
-  }
-  main {
-    padding: 16px 4px 6px;
-  }
-}
-
 .card {
   padding: 2em;
 }
@@ -356,6 +305,11 @@ main {
 
 .image-response {
     width: 110px;
+}
+
+.duck-container {
+  position: relative;
+  display: inline-block;
 }
 
 .wiggle {
@@ -380,19 +334,66 @@ main {
   100% { transform: rotate(0deg); }
 }
 
-/* White container for QuacklyRecipe */
-.quackly-recipe-container {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px 0px rgba(0, 0, 0, 0.06);
-    padding: 32px 24px;
-    margin: 32px auto;
-    max-width: 800px;
-    width: 100%;
-}
-
+/* Mobile-friendly enhancements */
 @media (max-width: 600px) {
-  .quackly-recipe-container {
+  .add-ingredient-form {
+    flex-direction: column !important;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .add-ingredient-form > input {
+    font-size: 1.3rem;
+    padding: 22px 24px;
+    border-width: 2px;
+  }
+  .add-ingredient-form > button {
+    font-size: 1.25rem;
+    padding: 22px 0;
+    min-height: 56px;
+    border-width: 2px;
+  }
+  .ingredient-item {
+    width: 100%;
+    height: 64px;
+    margin-bottom: 16px;
+  }
+  .ingredient-btn {
+    font-size: 1.15rem;
+    padding: 16px 18px;
+    min-height: 56px;
+    border-width: 2px;
+  }
+  .ingredient-text {
+    font-size: 1.15rem;
+  }
+
+  .ingredients-list {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
+  }
+  .add-ingredient-form {
+    flex-direction: column;
+    gap: 8px;
+    height: auto;
+  }
+  .add-ingredient-form > button {
+    width: 100%;
+  }
+  .add-ingredient-form > input {
+    max-width: 100%;
+  }
+  header {
+    height: auto;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 0;
+  }
+  main {
+    padding: 16px 4px 6px;
+  }
+
+  .suggested-recipe-container {
     padding: 18px 4px;
     border-radius: 10px;
     margin: 16px 0;
