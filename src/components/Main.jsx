@@ -1,18 +1,17 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 
-import QuacklyRecipe from "./components/QuacklyRecipe";
-import IngredientsList from "./components/IngredientsList";
-import Spinner from "./components/Spinner";
+import QuacklyRecipe from "./QuacklyRecipe";
+import IngredientsList from "./IngredientsList";
+import Spinner from "./Spinner";
 
-import { getRecipeFromChefClaude } from "./ai"
+import { getRecipeFromChefClaude } from "../ai"
 
 export default function Main() {
     const [ingredients, setIngredients] = useState([])
     const [recipe, setRecipe] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const loadingRef = useRef(null);
-    const recipeRef = useRef(null);
-
+    const getRecipeContainerRef = useRef(null);
 
     function addIngredient(formData) {
         const newIngredient = formData.get('ingredient').trim();
@@ -35,16 +34,21 @@ export default function Main() {
         try {
             const recipeMarkdown = await getRecipeFromChefClaude(ingredients);
             setRecipe(recipeMarkdown);
-            // Scroll to recipe after loading
-            setTimeout(() => {
-                if (recipeRef.current) {
-                    recipeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-                }
-            }, 100); // slight delay to ensure render
         } finally {
             setIsLoading(false);
         }
     }
+
+    useEffect(() => {
+        // When recipe is loaded and not loading, scroll to get-recipe-container
+        if (recipe && !isLoading) {
+            setTimeout(() => {
+                if (getRecipeContainerRef.current) {
+                    getRecipeContainerRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+            }, 100); // slight delay to ensure render
+        }
+    }, [recipe, isLoading]);
 
     return (
         <main>
@@ -62,6 +66,7 @@ export default function Main() {
                     ingredients={ingredients}
                     getRecipe={getRecipe}
                     onRemoveIngredient={removeIngredient}
+                    getRecipeContainerRef={getRecipeContainerRef}
                 />
             }
             {isLoading && (
@@ -71,10 +76,11 @@ export default function Main() {
                 </div>
             )}
             {!isLoading && recipe && (
-                <div ref={recipeRef}>
-                    <QuacklyRecipe recipe={recipe} />
-                </div>
+                <QuacklyRecipe 
+                    recipe={recipe} 
+                    getRecipe={getRecipe} 
+                />
             )}
         </main>
-    )
+    );
 }

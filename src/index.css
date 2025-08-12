@@ -198,13 +198,14 @@ button {
     line-height: 24px;
 }
 
+
 .get-recipe-container p {
     color: #6B7280;
     font-size: 0.875rem;
     line-height: 20px;
 }
 
-.get-recipe-container button {
+.get-recipe-button {
     border: none;
     border-radius: 6px;
     background: #D17557;
@@ -223,7 +224,7 @@ button {
     box-sizing: border-box;
     transition: background 0.2s;
 }
-.get-recipe-container button:hover {
+.get-recipe-button:hover {
     background: #b95e3e;
 }
 

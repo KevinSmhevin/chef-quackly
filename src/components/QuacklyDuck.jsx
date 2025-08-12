@@ -1,6 +1,6 @@
 export default function QuacklyDuck() {
     return (
-        <div class="duck-container">
+        <div className="duck-container">
             <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                 className="image-response wiggle"
                 viewBox="50 60 200 180" width="200" height="180"
