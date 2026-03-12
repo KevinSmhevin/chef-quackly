@@ -1,20 +1,21 @@
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 
+import QuacklyRecipe from "./QuacklyRecipe";
+import IngredientsList from "./IngredientsList";
+import Spinner from "./Spinner";
 
-import QuacklyRecipe from "./components/QuacklyRecipe";
-import IngredientsList from "./components/IngredientsList";
-import Spinner from "./components/Spinner";
-
-import { getRecipeFromChefClaude } from "./ai"
+import { getRecipeFromChefClaude } from "../ai"
 
 export default function Main() {
     const [ingredients, setIngredients] = useState([])
     const [recipe, setRecipe] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-
+    const loadingRef = useRef(null);
+    const getRecipeContainerRef = useRef(null);
 
     function addIngredient(formData) {
         const newIngredient = formData.get('ingredient').trim();
+        if (!newIngredient) return; // Prevent adding empty or whitespace-only ingredients
         setIngredients(prevIngredients => [...prevIngredients, newIngredient]);
     }
 
@@ -24,6 +25,12 @@ export default function Main() {
 
     async function getRecipe() {
         setIsLoading(true);
+        // Scroll to loading screen
+        setTimeout(() => {
+            if (loadingRef.current) {
+                loadingRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        }, 0);
         try {
             const recipeMarkdown = await getRecipeFromChefClaude(ingredients);
             setRecipe(recipeMarkdown);
@@ -31,6 +38,17 @@ export default function Main() {
             setIsLoading(false);
         }
     }
+
+    useEffect(() => {
+        // When recipe is loaded and not loading, scroll to get-recipe-container
+        if (recipe && !isLoading) {
+            setTimeout(() => {
+                if (getRecipeContainerRef.current) {
+                    getRecipeContainerRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+            }, 100); // slight delay to ensure render
+        }
+    }, [recipe, isLoading]);
 
     return (
         <main>
@@ -48,15 +66,21 @@ export default function Main() {
                     ingredients={ingredients}
                     getRecipe={getRecipe}
                     onRemoveIngredient={removeIngredient}
+                    getRecipeContainerRef={getRecipeContainerRef}
                 />
             }
             {isLoading && (
-                <div className="loading-screen">
+                <div className="loading-screen" ref={loadingRef}>
                     <Spinner />
-                    <span className="loading-text">Loading recipe...</span>
+                    <span className="loading-text">Chef Quackly is working on your recipe ^.^</span>
                 </div>
             )}
-            {!isLoading && recipe && <QuacklyRecipe recipe={recipe} />}
+            {!isLoading && recipe && (
+                <QuacklyRecipe 
+                    recipe={recipe} 
+                    getRecipe={getRecipe} 
+                />
+            )}
         </main>
-    )
+    );
 }
